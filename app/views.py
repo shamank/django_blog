@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
@@ -14,6 +15,11 @@ class PostListView(ListView):
 
     def get_queryset(self):
         return Post.objects.filter(category__slug=self.kwargs.get('slug'))
+
+    def get(self):
+        if self.user.is_authenticated:
+            return HttpResponseForbidden()
+        self.object = self.get_object()
 
 
 def home(request):
