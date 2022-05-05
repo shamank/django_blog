@@ -8,10 +8,11 @@ from django.db import models
 
 class Post(models.Model):
     title = models.CharField(verbose_name='Название поста', max_length=160, unique=True)
-    description = models.TextField(verbose_name='Краткое описание')
+    description = models.TextField(verbose_name='Краткое описание', blank=True)
     image = models.ImageField(verbose_name='Основная фотография', upload_to='images/posts/', null=True)
     content = models.TextField(verbose_name='Содержание поста')
     category = models.ForeignKey(to='category', on_delete=models.SET_NULL, null=True)
+    tags = models.ManyToManyField(to='tag', verbose_name='Теги', related_name='post_tags', blank=True)
     created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
     update_at = models.DateTimeField(verbose_name='Дата обновления', auto_now=True, blank=True)
     created_by = models.ForeignKey('auth.user', on_delete=models.SET_NULL, null=True, related_name='author')
@@ -28,7 +29,7 @@ class Post(models.Model):
 
 class Category(models.Model):
     title = models.CharField(verbose_name='Название категории', max_length=60)
-    description = models.TextField(verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание', blank=True)
     slug = models.SlugField(verbose_name='URL', max_length=160, unique=True)
 
     def __str__(self):
@@ -37,6 +38,18 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+class Tag(models.Model):
+    title = models.CharField(verbose_name='Название тега', max_length=60)
+    description = models.TextField(verbose_name='Описание', blank=True)
+    slug = models.SlugField(verbose_name='URL', max_length=160, unique=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
 
 
 class Comment(models.Model):
