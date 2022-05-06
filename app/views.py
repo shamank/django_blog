@@ -6,6 +6,12 @@ from .models import Post
 
 # Create your views here.
 
+class FullPostListView(ListView):
+    model = Post 
+    template_name = 'app/home_page.html'
+    context_object_name = 'posts'
+
+
 class PostListView(ListView):
     model = Post
     template_name = 'app/post_list.html'
@@ -19,5 +25,5 @@ class PostBlogView(DetailView):
     model = Post
     
 
-def home(request):
-    return render(request, 'app/homepage.html')
+# def home(request):
+#     return render(request, 'app/homepage.html')
