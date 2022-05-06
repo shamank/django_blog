@@ -12,8 +12,12 @@ class PostListView(ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        return Post.objects.filter(category__slug=self.kwargs.get('slug'))
+        return Post.objects.filter(category__slug=self.kwargs.get('slug')).order_by('-created_at')
 
+
+class PostBlogView(DetailView):
+    model = Post
+    
 
 def home(request):
     return render(request, 'app/homepage.html')
