@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% include 'include/_page_header.html' %}
 <!-- section -->
 <div class="section">
 	<!-- container -->
@@ -109,7 +110,10 @@
 				<!-- /post widget -->
 				
 				<!-- catagories -->
-				<div class="aside-widget">
+
+				{% load page_header %}
+				{% show_categories %}
+				<!--<div class="aside-widget">
 					<div class="section-title">
 						<h2>Catagories</h2>
 					</div>
@@ -121,7 +125,7 @@
 							<li><a href="#" class="cat-3">CSS<span>35</span></a></li>
 						</ul>
 					</div>
-				</div>
+				</div> -->
 				<!-- /catagories -->
 				
 				<!-- tags -->
