@@ -1,6 +1,6 @@
 from django.http import HttpResponseForbidden
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 
 from .models import Post
 
@@ -12,14 +12,18 @@ class FullPostListView(ListView):
     context_object_name = 'posts'
 
 
-class PostListView(ListView):
-    model = Post
+class PostListView(FullPostListView, ListView):
+    # model = Post
     template_name = 'app/post_list.html'
-    context_object_name = 'posts'
+    # context_object_name = 'posts'
 
     def get_queryset(self):
         return Post.objects.filter(category__slug=self.kwargs.get('slug')).order_by('-created_at')
 
+
+class AboutUsView(TemplateView):
+    template_name = 'app/about.html'
+    
 
 class PostBlogView(DetailView):
     model = Post
