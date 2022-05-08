@@ -1,10 +1,16 @@
 from django.http import HttpResponseForbidden
+from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
 
 from .models import Post
 
 # Create your views here.
+
+import json 
+import redis 
+
+edis_instance = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT)
 
 class FullPostListView(ListView):
     model = Post 
@@ -28,6 +34,10 @@ class AboutUsView(TemplateView):
 class PostBlogView(DetailView):
     model = Post
     
+
+# print all the hits
+# for hit in search:
+#     print(hit.title)
 
 # def home(request):
 #     return render(request, 'app/homepage.html')

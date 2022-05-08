@@ -12,7 +12,8 @@
 				<div class="row">
 					<!-- post -->
 					{% for post in posts %}
-					<div class="col-md-6">
+					<div class="col-md-4">
+						
 						<div class="post">
 							<a class="post-img" href="{% url 'post_detail' post.slug %}"><img src="{{ post.image.url }}" alt=""></a>
 							<div class="post-body">
@@ -24,6 +25,7 @@
 								<p>{{post.description }}</p>
 							</div>
 						</div>
+						
 					</div>
 					{% endfor %}
 

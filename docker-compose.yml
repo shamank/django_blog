@@ -12,6 +12,7 @@ services:
     depends_on:
       - db
       - redis
+      - elastic
 
   db:
     image: postgres
@@ -28,6 +29,18 @@ services:
     container_name: redis_db
     volumes:
       - redis_data:/var/lib/redis/data 
+  
+  elastic:
+    image: elasticsearch:8.2.0
+    container_name: elastic_search
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    volumes:
+      - elastic_data:/var/lib/elastic/data
 volumes:
   pg_data: null
   redis_data: null
+  elastic_data: null

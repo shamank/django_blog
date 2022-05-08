@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'django_elasticsearch_dsl',
     'ckeditor',
     'ckeditor_uploader',
-
+    
+    'search',
     'app',
     'users',
 ]
@@ -81,6 +84,8 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 DATABASES = {
     'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': 'sqlite.db'
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER' : 'localuser',
@@ -142,6 +147,26 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#REDIS
+# REDIS_HOST = 'redis'
+# REDIS_PORT = 6379
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/',
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#         }
+#     }
+# }
+
+#Elastic search
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': "elastic:9200",
+    },
+}
 
 # Ckeditor config
 CKEDITOR_UPLOAD_PATH = 'uploads/'

@@ -27,7 +27,9 @@
                     <button class="aside-btn"><i class="fa fa-bars"></i></button>
                     <button class="search-btn"><i class="fa fa-search"></i></button>
                     <div class="search-form">
-                        <input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
+                        <form class="search-form" action="{% url 'search' %}" method="GET">
+                            <input class="search-input" type="text" name="q" placeholder="   Enter Your Search ...">
+                        </form>
                         <button class="search-close"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
