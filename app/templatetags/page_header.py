@@ -11,3 +11,8 @@ def get_category(slug):
 def show_categories():
     categories = Category.objects.all()
     return {"categories": categories}
+
+# @register.inclusion_tag('include/_navigation.html')
+# def show_categories():
+#     categories = Category.objects.all()
+#     return {"categories": categories}

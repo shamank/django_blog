@@ -10,12 +10,13 @@ from .models import Post
 import json 
 import redis 
 
-edis_instance = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT)
+#edis_instance = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=0)
 
 class FullPostListView(ListView):
     model = Post 
     template_name = 'app/home_page.html'
     context_object_name = 'posts'
+    paginate_by = 1
 
 
 class PostListView(FullPostListView, ListView):
