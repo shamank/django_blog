@@ -2,8 +2,10 @@ from django.http import HttpResponseForbidden
 from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .models import Post
+from .models import Post, Comment
+from .forms import CommentForm
 
 # Create your views here.
 
@@ -31,9 +33,36 @@ class PostListView(FullPostListView, ListView):
 class AboutUsView(TemplateView):
     template_name = 'app/about.html'
     
+class CreateComment(CreateView):
+    model = Comment
+    form_class = CommentForm
 
+
+    # def form_valid(self, form):
+    #     # form.instance.post = self.request.
+    #     form.instance.created_by = self.request.user
+    #     return super().form_valid(form)
+    
+    def form_valid(self, form):
+        form.instance.post = Post.objects.get(pk=self.kwargs.get('pk'))
+        form.instance.created_by = self.request.user
+        self.object = form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
+    
 class PostBlogView(DetailView):
     model = Post
+    template_name = 'app/post_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        return context
+
+
+    
     
 
 # print all the hits

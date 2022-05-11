@@ -1,8 +1,9 @@
-from distutils.command.upload import upload
-from tabnanny import verbose
-from tkinter import CASCADE
-from unicodedata import category
+# from distutils.command.upload import upload
+# from tabnanny import verbose
+# from tkinter import CASCADE
+#from unicodedata import category
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -11,7 +12,7 @@ class Post(models.Model):
     description = models.TextField(verbose_name='Краткое описание', blank=True)
     image = models.ImageField(verbose_name='Основная фотография', upload_to='images/posts/', null=True)
     content = models.TextField(verbose_name='Содержание поста')
-    category = models.ForeignKey(to='category', on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(to='category', on_delete=models.SET_NULL, null=True, related_name='cats')
     tags = models.ManyToManyField(to='tag', verbose_name='Теги', related_name='post_tags', blank=True)
     created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
     update_at = models.DateTimeField(verbose_name='Дата обновления', auto_now=True, blank=True)
@@ -21,6 +22,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'Пост'
@@ -60,6 +64,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.pk
+    
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'Комментарий'
