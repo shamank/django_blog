@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .models import Post, Comment
+from .models import Post, Comment, View
 from .forms import CommentForm
 
 # Create your views here.
@@ -18,7 +18,7 @@ class FullPostListView(ListView):
     model = Post 
     template_name = 'app/home_page.html'
     context_object_name = 'posts'
-    paginate_by = 1
+    paginate_by = 5
 
 
 class PostListView(FullPostListView, ListView):
@@ -55,6 +55,13 @@ class CreateComment(CreateView):
 class PostBlogView(DetailView):
     model = Post
     template_name = 'app/post_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if request.user.is_authenticated:
+            View.objects.create(user=request.user, post=self.object)
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

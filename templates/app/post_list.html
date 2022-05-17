@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load page_header %}
 
 {% block content %}
 {% include 'include/_page_header.html' %}
@@ -66,7 +67,8 @@
 				<!-- /ad -->
 				
 				<!-- post widget -->
-				<div class="aside-widget">
+				
+				<!-- <div class="aside-widget">
 					<div class="section-title">
 						<h2>Most Read</h2>
 					</div>
@@ -98,7 +100,7 @@
 							<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<!-- /post widget -->
 				
 				<!-- catagories -->
@@ -137,27 +139,14 @@
 				</div>
 				<!-- /tags -->
 				
-				<!-- archive -->
-				<div class="aside-widget">
-					<div class="section-title">
-						<h2>Archive</h2>
-					</div>
-					<div class="archive-widget">
-						<ul>
-							<li><a href="#">Jan 2018</a></li>
-							<li><a href="#">Feb 2018</a></li>
-							<li><a href="#">Mar 2018</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- /archive -->
 			</div>
 		</div>
 		<!-- /row -->
 		<div class="row">
 			<div class="col-md-4">
-				{% load page_header %}
+				
 				{% show_categories %}
+				{% most_read %}
 			</div>
 		</div>
 	</div>

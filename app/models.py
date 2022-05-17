@@ -99,8 +99,8 @@ class Like(models.Model):
 
 
 class View(models.Model):
-    user = models.ForeignKey(to='auth.user', verbose_name='ID пользователя', on_delete=models.CASCADE)
-    post = models.ForeignKey(to='post', verbose_name='ID поста', on_delete=models.CASCADE)
+    user = models.ForeignKey(to='auth.user', verbose_name='ID пользователя', on_delete=models.CASCADE, related_name='user_to_view')
+    post = models.ForeignKey(to='post', verbose_name='ID поста', on_delete=models.CASCADE, related_name='post_to_view')
 
     def __str__(self):
         return self.pk
